@@ -44,11 +44,7 @@ const deleteById = async (req, res) => {
   }
 
   const updateById = async (req, res) => {
-         
-    //   if (req.body === undefined) {
-    //     throw HttpError(404, "missing fields");
-    //     }    
-
+            
       const {contactId} = req.params;
       const result = await contacts.updateContact(contactId, req.body);
       if (!result) {
