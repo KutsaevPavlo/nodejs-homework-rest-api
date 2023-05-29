@@ -5,7 +5,8 @@ const validateBody = schema =>{
       
         const {error} = schema.validate(req.body)
         if (error) {
-          next (HttpError(400, error.message)) ;
+          const nameMisssing = error.message.split(" ")[0];                    
+          next (HttpError(400, `missing required ${nameMisssing} field`)) ;
         }
         next()
 
