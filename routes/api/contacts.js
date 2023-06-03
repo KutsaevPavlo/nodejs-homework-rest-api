@@ -14,8 +14,11 @@ router.get('/:contactId', isValidId, ctrl.getById)
 
 router.post('/', validateBody(shemas.addShema), ctrl.add)
 
-// router.delete('/:contactId', isValidId,ctrl.deleteById)
+router.delete('/:contactId', isValidId,ctrl.deleteById)
 
-// router.put('/:contactId', isValidId, validateRequestBody, validateBody(schema.addShema), ctrl.updateById)
+router.put('/:contactId', isValidId, validateRequestBody, validateBody(shemas.addShema), ctrl.updateById)
+
+router.patch('/:contactId/favorite', isValidId, validateRequestBody, validateBody(shemas.updateFavoriteShema), ctrl.updateStatusContact )
+
 
 module.exports = router
