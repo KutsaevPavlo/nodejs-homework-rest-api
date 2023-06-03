@@ -1,4 +1,4 @@
-const Contact = require('../models/contact');
+const {Contact} = require('../models/contact');
 
 // const contacts = require('../models/contacts');
 const {HttpError, ctrlWrapper} = require('../helpers');
@@ -10,21 +10,19 @@ const {HttpError, ctrlWrapper} = require('../helpers');
     res.json(result)
      }
 
-// const getById = async (req, res) => {
+const getById = async (req, res) => {
     
-//       const {contactId} = req.params;
-//       const result = await contacts.getContactById(contactId);
-//       if (!result) {
-//         throw HttpError(404, "Not found");
-//       }
-//       res.json(result)
+      const {contactId} = req.params;
+      const result = await Contact.findOne({_id:contactId})
+      if (!result) {
+        throw HttpError(404, "Not found");
+      }
+      res.json(result)
     
     
-//   }
+  }
 
   const add = async (req, res) => {
-    
-      
       const result = await Contact.create(req.body);
       res.status(201).json(result);
     
@@ -56,7 +54,7 @@ const {HttpError, ctrlWrapper} = require('../helpers');
 
   module.exports ={
     getAll: ctrlWrapper(getAll),
-    // getById: ctrlWrapper(getById),
+    getById: ctrlWrapper(getById),
     add: ctrlWrapper(add),
     // deleteById: ctrlWrapper(deleteById),
     // updateById: ctrlWrapper(updateById),
