@@ -1,7 +1,7 @@
 const express = require('express')
 
 const {validateBody, isValidId} = require('../../middlewares');
-const {validateRequestBody} = require('../../helpers')
+const {validateRequestBody, validateRequestBodyPatch} = require('../../helpers')
 
 const {shemas} = require('../../models/contact')
 const router = express.Router()
@@ -18,7 +18,7 @@ router.delete('/:contactId', isValidId,ctrl.deleteById)
 
 router.put('/:contactId', isValidId, validateRequestBody, validateBody(shemas.addShema), ctrl.updateById)
 
-router.patch('/:contactId/favorite', isValidId, validateRequestBody, validateBody(shemas.updateFavoriteShema), ctrl.updateStatusContact )
+router.patch('/:contactId/favorite', isValidId, validateRequestBodyPatch, validateBody(shemas.updateFavoriteShema), ctrl.updateStatusContact )
 
 
 module.exports = router
