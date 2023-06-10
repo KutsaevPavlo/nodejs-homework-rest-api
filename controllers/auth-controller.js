@@ -10,7 +10,7 @@ const singup = async (req, res) =>{
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if (user) {
-        throw HttpError (409, "Email already in use")
+        throw HttpError (409, "Email in use")
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -25,11 +25,11 @@ const singin = async (req, res) => {
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if(!user) {
-        throw HttpError(401);
+        throw HttpError(401, "Email or password is wrong");
     }
     const passwordCompare = await bcrypt.compare(password, user.password);
     if(!passwordCompare) {
-        throw HttpError(401);
+        throw HttpError(401, "Email or password is wrong");
     }
 
     const {_id: id} = user;
@@ -41,23 +41,39 @@ const singin = async (req, res) => {
     await User.findByIdAndUpdate(id, {token});
     res.json({
         token,
+        user: {
+            email,
+            subscription: "starter"
+          }
     })
 }
 
 const getCurrent = async (req, res) => {
     const {name, email} = req.user;
     res.json({
-        name,
         email,
+        subscription: "starter",
     })
 }
 
 const logout = async (req, res) => {
 const {_id}= req.user;
 await User.findByIdAndUpdate(_id, {token: ""})
-res.json({
-    message: "Logout success"
-})
+res.status(204).json()
+}
+
+const subscription = async (req,res) => {
+    
+    const {_id, email}= req.user;
+    const user = await User.findOne({email});
+    const {subscription} = req.body;
+    await User.findByIdAndUpdate(_id, {subscription: subscription})
+    res.json({
+        user: {
+            email,
+            subscription,
+        }
+    })
 }
 
 module.exports = {
@@ -65,4 +81,5 @@ module.exports = {
     singin: ctrlWrapper(singin),
     getCurrent: ctrlWrapper(getCurrent),
     logout: ctrlWrapper(logout),
+    subscription: ctrlWrapper(subscription),
 }
