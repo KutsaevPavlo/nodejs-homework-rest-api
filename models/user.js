@@ -24,7 +24,9 @@ const userShema = new Schema({
           enum: ["starter", "pro", "business"],
           default: "starter"
         },
-        token: String
+        token: {
+            type: String,
+        }
       
 }, {versionKey: false});
 

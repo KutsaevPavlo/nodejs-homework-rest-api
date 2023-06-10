@@ -1,12 +1,14 @@
 const express = require('express')
 
-const {validateBody, isValidId} = require('../../middlewares');
+const {validateBody, isValidId, authenticate} = require('../../middlewares');
 const {validateRequestBody, validateRequestBodyPatch} = require('../../helpers')
 
 const {shemas} = require('../../models/contact')
 const router = express.Router()
 
 const ctrl = require("../../controllers/contacts");
+
+router.use(authenticate);
 
 router.get('/', ctrl.getAll)
 
