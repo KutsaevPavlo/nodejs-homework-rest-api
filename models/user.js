@@ -4,11 +4,7 @@ const {handleMongooseError} = require('../helpers');
 
 const {emailRegexp} = require('../constants/users');
 
-const userShema = new Schema({
-    name: {
-        type: String,
-        required: true,
-      },
+const userShema = new Schema({    
         password: {
           type: String,
           required: [true, 'Set password for user'],
