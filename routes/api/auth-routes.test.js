@@ -1,6 +1,7 @@
 const app = require("../../app");
 const moongoose = require("mongoose");
 const request = require('supertest');
+const User = require("../../models/user");
 
 const {DB_HOST, PORT} = process.env;
 
@@ -26,8 +27,8 @@ describe("test login route", ()=>{
         const {body, statusCode, token} = await request(app).post("/users/login").send(loginData)
         expect(statusCode).toBe(200)
         expect(token).toBe()
-        expect(body.email).toBe(loginData.email)
-        expect(body.subscription).toBe()
+        expect(body.user.email).toBe(loginData.email)
+        expect(body.user.subscription).toBe('starter')
 
     })
 
