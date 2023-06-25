@@ -12,7 +12,12 @@ const userLoginShema = Joi.object({
     password: Joi.string().min(6).required(),
 })
 
+const userEmailShema = Joi.object({    
+    email: Joi.string().pattern(emailRegexp).required(),    
+})
+
 module.exports = {
     userRegisterShema,
     userLoginShema,
+    userEmailShema,
 }
